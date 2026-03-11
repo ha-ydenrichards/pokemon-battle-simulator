@@ -2,7 +2,7 @@ class_name Pokemon
 extends Node
 
 var pokemon_name: String
-var max_hp: int
+var hp_stat: int
 var current_hp: int
 var attack: int
 var defense: int
@@ -12,14 +12,15 @@ var speed: int
 var types: Array
 var moves: Array
 var front_sprite: String
-var back_sprite
+var back_sprite: String
+var current_move: String
 
 
-
+# Constructor that initializes a Pokemon's stats, using its entry in the PokemonDB.
 func _init(data):
 	pokemon_name = data["name"]
-	max_hp = data["hp"]
-	current_hp = max_hp
+	hp_stat = data["hp"]
+	current_hp = calculate_hp(hp_stat)
 	attack = data["attack"]
 	defense = data["defense"]
 	special_attack = data["special attack"]
@@ -29,9 +30,9 @@ func _init(data):
 	moves = data["moves"]
 	front_sprite = data["front_sprite"]
 	back_sprite = data["back_sprite"]
+	current_move = ""
 
-func _ready() -> void:
-	pass
-
-func _process(delta: float) -> void:
-	pass
+# Calculates a Pokemon's total hit points (hp).
+func calculate_hp(hp_stat):
+	return int(((2 * hp_stat  * 50) / 100) + 50 + 10)
+	

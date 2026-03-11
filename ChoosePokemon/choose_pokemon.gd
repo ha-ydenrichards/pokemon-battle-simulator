@@ -11,10 +11,8 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	pass
 
-
 func _on_pick_ampharos_pressed() -> void:
 	player_selection = "Ampharos"
-
 
 func _on_pick_crobat_pressed() -> void:
 	player_selection = "Crobat"
@@ -27,3 +25,12 @@ func _on_select_pokemon_pressed() -> void:
 	else:
 		GameManager.player2_pokemon = Pokemon.new(PokemonDB.POKEMON_DATA[player_selection])	
 		get_tree().change_scene_to_file("res://Battle/battle_scene.tscn")
+
+func _on_pick_houndoom_pressed() -> void:
+	player_selection = "Houndoom"
+
+func _on_pick_kingdra_pressed() -> void:
+	player_selection = "Kingdra"
+
+func _on_pick_tinkaton_pressed() -> void:
+	player_selection = "Tinkaton"
