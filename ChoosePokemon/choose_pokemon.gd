@@ -22,8 +22,8 @@ func _on_pick_crobat_pressed() -> void:
 
 func _on_select_pokemon_pressed() -> void:
 	if current_player == 1:
-		GameManager.player1_pokemon = Poke.new(PokemonDB.POKEMON_DATA[player_selection]) 
+		GameManager.player1_pokemon = Pokemon.new(PokemonDB.POKEMON_DATA[player_selection]) 
 		current_player = 2
 	else:
-		GameManager.player2_pokemon = Poke.new(PokemonDB.POKEMON_DATA[player_selection])	
+		GameManager.player2_pokemon = Pokemon.new(PokemonDB.POKEMON_DATA[player_selection])	
 		get_tree().change_scene_to_file("res://Battle/battle_scene.tscn")

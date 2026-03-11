@@ -1,5 +1,5 @@
-extends Node
 class_name Pokemon
+extends Node
 
 var pokemon_name: String
 var max_hp: int
@@ -11,7 +11,10 @@ var special_defense: int
 var speed: int
 var types: Array
 var moves: Array
-var sprite: String
+var front_sprite: String
+var back_sprite
+
+
 
 func _init(data):
 	pokemon_name = data["name"]
@@ -22,9 +25,10 @@ func _init(data):
 	special_attack = data["special attack"]
 	special_defense = data["special defense"]
 	speed = data["speed"]
-	types = data["types"]
+	types = data["type"]
 	moves = data["moves"]
-	sprite = data["sprite"]
+	front_sprite = data["front_sprite"]
+	back_sprite = data["back_sprite"]
 
 func _ready() -> void:
 	pass

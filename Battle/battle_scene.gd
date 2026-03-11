@@ -4,13 +4,11 @@ extends Node2D
 
 
 
-
-
 func _ready():
 	if GameManager.player1_pokemon:
-		player1_sprite.texture = load(GameManager.player1_pokemon.sprite)
+		player1_sprite.texture = load(GameManager.player1_pokemon.back_sprite)
 	if GameManager.player2_pokemon:
-		player2_sprite.texture = load(GameManager.player2_pokemon.sprite)
+		player2_sprite.texture = load(GameManager.player2_pokemon.front_sprite)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

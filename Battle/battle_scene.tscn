@@ -6,7 +6,9 @@
 script = ExtResource("1_rd3up")
 
 [node name="Player1Sprite" type="Sprite2D" parent="."]
-position = Vector2(100, 100)
+position = Vector2(300, 400)
+scale = Vector2(4, 4)
 
 [node name="Player2Sprite" type="Sprite2D" parent="."]
-position = Vector2(200, 200)
+position = Vector2(800, 200)
+scale = Vector2(4, 4)

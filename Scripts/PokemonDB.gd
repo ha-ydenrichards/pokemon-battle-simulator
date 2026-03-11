@@ -1,6 +1,7 @@
 extends Node
 var POKEMON_DATA = {
 		"Ampharos": {
+		"name": "Ampharos",
 		"hp": 90,
 		"attack": 75,
 		"defense": 85,
@@ -13,6 +14,7 @@ var POKEMON_DATA = {
 		"back_sprite": "res://Assets/PokemonSprites/ampharos_back.png"
 	},
 	"Crobat": {
+		"name": "Crobat",
 		"hp": 85,
 		"attack": 90,
 		"defense": 80,
