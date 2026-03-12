@@ -74,6 +74,9 @@ func _on_fourth_move_pressed() -> void:
 # This function swaps the buttons with the correct move names after one player chooses their move
 func switch_moves():
 	if current_player == 1:
+		# If the player has been switched back to one, we can begin the Battle Logic.
+		# speed_calc() is called and the moves are switched after the logic is done.
+		BattleLogic.speed_calc()
 		first_move.text = GameManager.player1_pokemon.moves[0]
 		second_move.text = GameManager.player1_pokemon.moves[1]
 		third_move.text = GameManager.player1_pokemon.moves[2]

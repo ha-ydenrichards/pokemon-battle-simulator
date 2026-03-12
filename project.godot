@@ -19,3 +19,6 @@ config/icon="res://icon.svg"
 
 GameManager="*res://Scripts/GameManager.gd"
 PokemonDB="*res://Scripts/PokemonDB.gd"
+BattleLogic="*res://Scripts/BattleLogic.gd"
+MoveDatabase="*res://Scripts/move_database.gd"
+TypeChart="*res://Scripts/type_chart.gd"
