@@ -11,6 +11,7 @@ extends Node2D
 @onready var timer = $Timer
 var current_player = 1
 var is_fainted: bool
+var victory = 0
 
 func _ready():
 	# Loads player 1's pokemon sprite texture and displays their moves first.
@@ -79,6 +80,7 @@ func switch_moves() -> void:
 		# speed_calc() is called and the moves are switched after the logic is done.
 		var pokemon_order = BattleLogic.speed_calc()
 		await display_battle_info(pokemon_order)
+		
 		first_move.text = GameManager.player1_pokemon.moves[0]
 		second_move.text = GameManager.player1_pokemon.moves[1]
 		third_move.text = GameManager.player1_pokemon.moves[2]
@@ -96,15 +98,22 @@ func switch_moves() -> void:
 func display_battle_info(pokemon_order) -> void:
 	player_move_label.text = pokemon_order[0].pokemon_name + " used " + pokemon_order[0].current_move + "!"
 	await get_tree().create_timer(2.0).timeout
-	pokemon_order[1].current_hp -= pokemon_order[0].damage_dealt
-	is_fainted = is_pokemon_fainted(pokemon_order[1])
-	print(is_fainted)
+	if pokemon_order[0].damage_dealt != 0:
+		pokemon_order[1].current_hp -= pokemon_order[0].damage_dealt
+		is_fainted = is_pokemon_fainted(pokemon_order[1])
+	else: 
+		player_move_label.text = pokemon_order[0].name + "'s attack missed!"
+		await get_tree().create_timer(2.0).timeout
 	update_labels(pokemon_order[0])
 	await get_tree().create_timer(2.0).timeout
 	pokemon_order[0].current_hp -= pokemon_order[1].damage_dealt
 	player_move_label.text = pokemon_order[1].pokemon_name + " used " + pokemon_order[1].current_move + "!"
-	await get_tree().create_timer(2.0).timeout
-	is_fainted = is_pokemon_fainted(pokemon_order[0])
+	if pokemon_order[1].damage_dealt != 0:
+		await get_tree().create_timer(2.0).timeout
+		is_fainted = is_pokemon_fainted(pokemon_order[0])
+	else:
+		player_move_label.text = pokemon_order[1].name + "'s attack missed!"
+		await get_tree().create_timer(2.0).timeout
 	update_labels(pokemon_order[1])
 	await get_tree().create_timer(2.0).timeout
 	
@@ -115,16 +124,18 @@ func display_battle_info(pokemon_order) -> void:
 func update_labels(pokemon1):
 	if GameManager.player1_pokemon == pokemon1 and is_fainted == false:
 		player2_pokemon_health.text = GameManager.player2_pokemon.pokemon_name + ": " + str(GameManager.player2_pokemon.current_hp)
-		print('1')
 	elif GameManager.player1_pokemon == pokemon1 and is_fainted == true:
 		player2_pokemon_health.text = GameManager.player2_pokemon.pokemon_name+ ": " + "0"
-		print('2')
+		player_move_label.text = GameManager.player2_pokemon.pokemon_name + " fainted!"
+		player2_sprite.texture = null;
+		await get_tree().create_timer(2.0).timeout
+		
 	elif GameManager.player2_pokemon == pokemon1 and is_fainted == false:
-		print('3')
 		player1_pokemon_health.text = GameManager.player1_pokemon.pokemon_name+ ": " + str(GameManager.player1_pokemon.current_hp)
 	else:
-		print('4')
 		player1_pokemon_health.text = GameManager.player1_pokemon.pokemon_name+ ": " + "0"
+		player_move_label.text = GameManager.player1_pokemon.pokemon_name + " fainted!"
+		player1_sprite.texture = null;
 	is_fainted = false
 	await move_effectiveness(pokemon1)
 	"""

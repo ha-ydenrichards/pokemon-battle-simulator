@@ -100,7 +100,10 @@ func calculate_damage(attacker, defender, move) -> int:
 	
 	# If move accuracy is less than 100, calculate whether or not the move hits
 	if MoveDatabase.MOVES[move]["accuracy"] < 100:
-		if randi_range(1,100) >= MoveDatabase.MOVES[move]["accuracy"] * 100:
+		print(MoveDatabase.MOVES[move]["accuracy"])
+		var random_num = randi_range(1,100)
+		print(random_num)
+		if random_num >= MoveDatabase.MOVES[move]["accuracy"]:
 			damage = 0
 	return damage
 
