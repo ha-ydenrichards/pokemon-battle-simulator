@@ -7,7 +7,7 @@ var POKEMON_DATA = {
 		"defense": 85,
 		"special attack": 115,
 		"special defense": 90,
-		"speed": 55,
+		"speed": 100,
 		"type": ["Electric"],
 		"moves": ["Thunderbolt", "Fire Punch", "Ice Punch", "Double Edge"],
 		"front_sprite": "res://Assets/PokemonSprites/ampharos_front.png",

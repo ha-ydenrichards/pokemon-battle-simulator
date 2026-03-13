@@ -8,6 +8,7 @@ extends Node2D
 @onready var player1_pokemon_health = $Player1Pokemon
 @onready var player2_pokemon_health = $Player2Pokemon
 @onready var player_move_label = $PlayerMoveLabel
+@onready var timer = $Timer
 var current_player = 1
 
 
@@ -72,11 +73,12 @@ func _on_fourth_move_pressed() -> void:
 	switch_moves()
 
 # This function swaps the buttons with the correct move names after one player chooses their move
-func switch_moves():
+func switch_moves() -> void:
 	if current_player == 1:
 		# If the player has been switched back to one, we can begin the Battle Logic.
 		# speed_calc() is called and the moves are switched after the logic is done.
-		BattleLogic.speed_calc()
+		var pokemon_order = BattleLogic.speed_calc()
+		await display_battle_info(pokemon_order)
 		first_move.text = GameManager.player1_pokemon.moves[0]
 		second_move.text = GameManager.player1_pokemon.moves[1]
 		third_move.text = GameManager.player1_pokemon.moves[2]
@@ -90,4 +92,10 @@ func switch_moves():
 		fourth_move.text = GameManager.player2_pokemon.moves[3]
 		player_move_label.text = "What will " + str(GameManager.player2_pokemon.pokemon_name) + " do?"
 
+# This function updates labels and displays damage output and move selection.
+func display_battle_info(pokemon_order) -> void:
+	player_move_label.text = pokemon_order[0].pokemon_name + " used " + pokemon_order[0].current_move + "!"
+	await get_tree().create_timer(2.0).timeout
+	
+	
 		

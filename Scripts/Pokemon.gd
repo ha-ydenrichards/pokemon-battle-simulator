@@ -14,6 +14,7 @@ var moves: Array
 var front_sprite: String
 var back_sprite: String
 var current_move: String
+var damage_dealt: int
 
 
 # Constructor that initializes a Pokemon's stats, using its entry in the PokemonDB.
@@ -31,6 +32,7 @@ func _init(data):
 	front_sprite = data["front_sprite"]
 	back_sprite = data["back_sprite"]
 	current_move = ""
+	damage_dealt = 0
 
 # Calculates a Pokemon's total hit points (hp).
 func calculate_hp(hp_stat):

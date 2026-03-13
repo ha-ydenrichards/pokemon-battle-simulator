@@ -17,7 +17,6 @@ func _on_pick_ampharos_pressed() -> void:
 func _on_pick_crobat_pressed() -> void:
 	player_selection = "Crobat"
 
-
 func _on_select_pokemon_pressed() -> void:
 	# If the player clicks the Select Pokemon button, but haven't picked a pokemon yet, do nothing.
 	if player_selection != null:
@@ -42,3 +41,7 @@ func _on_pick_kingdra_pressed() -> void:
 
 func _on_pick_tinkaton_pressed() -> void:
 	player_selection = "Tinkaton"
+
+
+func _on_timer_timeout() -> void:
+	pass # Replace with function body.

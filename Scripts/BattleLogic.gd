@@ -1,5 +1,8 @@
 extends Node
-
+var first_attack: int
+var both_attacked = false
+var first_pokemon
+var second_pokemon
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -10,23 +13,53 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	pass
 
-func speed_calc() -> void:
+func speed_calc() -> Array:
+	# If player 1's pokemon is faster, they attack first
 	if GameManager.player1_pokemon.speed > GameManager.player2_pokemon.speed:
+		first_attack = 1
+		first_pokemon = GameManager.player1_pokemon
+		second_pokemon = GameManager.player2_pokemon
 		player_one_attack()
+	# If player 2's pokemon is faster, they attack first
 	elif GameManager.player1_pokemon.speed < GameManager.player2_pokemon.speed:
+		first_attack = 2
+		first_pokemon = GameManager.player2_pokemon
+		second_pokemon = GameManager.player1_pokemon
 		player_two_attack()
 	else:
+		# If the speed of each pokemon is the same, we have a speed tie and randomly select who attacks first.
 		var speed_tie = randi_range(1,2)
 		if speed_tie == 1:
+			first_attack = 1
+			first_pokemon = GameManager.player1_pokemon
+			second_pokemon = GameManager.player2_pokemon
 			player_one_attack()
 		else:
+			first_attack = 2
+			first_pokemon = GameManager.player1_pokemon
+			second_pokemon = GameManager.player2_pokemon
 			player_two_attack()
-	
-func player_one_attack() -> void:
-	var player_one_damage = calculate_damage(GameManager.player1_pokemon, GameManager.player2_pokemon, GameManager.player1_pokemon.current_move)
+	return [first_pokemon, second_pokemon]
 
+# Calculates the total damage of player one's attack and stores it in the damage_dealt variable
+func player_one_attack() -> void:
+	GameManager.player1_pokemon.damage_dealt = calculate_damage(GameManager.player1_pokemon, GameManager.player2_pokemon, GameManager.player1_pokemon.current_move)
+	second_attack()
+	
+# Calculates the total damage of player two's attack and stores it in the damage_dealt variable
 func player_two_attack() -> void:
-	var player_two_damage = calculate_damage(GameManager.player2_pokemon, GameManager.player1_pokemon, GameManager.player2_pokemon.current_move)
+	GameManager.player2_pokemon.damage_dealt = calculate_damage(GameManager.player2_pokemon, GameManager.player1_pokemon, GameManager.player2_pokemon.current_move)
+	second_attack()
+
+func second_attack() -> void:
+	if both_attacked != true:
+		both_attacked = true
+		if first_attack == 1:
+			GameManager.player2_pokemon.damage_dealt = calculate_damage(GameManager.player2_pokemon, GameManager.player1_pokemon, GameManager.player2_pokemon.current_move)
+
+		else:
+			GameManager.player1_pokemon.damage_dealt = calculate_damage(GameManager.player1_pokemon, GameManager.player2_pokemon, GameManager.player1_pokemon.current_move)
+
 	
 func calculate_damage(attacker, defender, move) -> int:
 	var level = 50
@@ -62,17 +95,22 @@ func calculate_damage(attacker, defender, move) -> int:
 	var modifier = random_multiplier * stab * crit * effectiveness
 
 	var damage = int(base_damage * modifier)
-	print(damage)
+	
+	# If move accuracy is less than 100, calculate whether or not the move hits
+	if MoveDatabase.MOVES[move]["accuracy"] < 100:
+		if randi_range(1,100) >= MoveDatabase.MOVES[move]["accuracy"] * 100:
+			damage = 0
 	return damage
 
+
 func get_type_effectiveness(move_type, defender_types):
-
+	# Base multiplier
 	var multiplier = 1.0
-
+	# Loop through the defender pokemon's types
 	for type in defender_types:
-
-		if TypeChart.TYPE_CHART.has(move_type):
-			if TypeChart.TYPE_CHART[move_type].has(type):
-				multiplier *= TypeChart.TYPE_CHART[move_type][type]
+		# Check if the defender's type is listed as a weakness or resistance in the move type dictionary
+		if TypeChart.TYPE_CHART[move_type].has(type):
+			multiplier *= TypeChart.TYPE_CHART[move_type][type]
+			print(multiplier)
 
 	return multiplier

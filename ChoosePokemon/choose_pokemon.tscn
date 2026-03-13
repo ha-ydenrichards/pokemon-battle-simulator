@@ -46,9 +46,12 @@ offset_top = 225.0
 offset_right = 567.0
 offset_bottom = 267.0
 
+[node name="Timer" type="Timer" parent="."]
+
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/PickAmpharos" to="." method="_on_pick_ampharos_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/PickCrobat" to="." method="_on_pick_crobat_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/PickHoundoom" to="." method="_on_pick_houndoom_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/PickKingdra" to="." method="_on_pick_kingdra_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/PickTinkaton" to="." method="_on_pick_tinkaton_pressed"]
 [connection signal="pressed" from="SelectPokemon" to="." method="_on_select_pokemon_pressed"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

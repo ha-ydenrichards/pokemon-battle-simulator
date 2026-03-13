@@ -2,7 +2,7 @@ extends Node
 
 var MOVES = {
 "Air Slash": {
-		"type": "Air",
+		"type": "Flying",
 		"power": 75,
 		"accuracy": 95,
 		"category": "Special",
