@@ -56,7 +56,6 @@ func second_attack() -> void:
 		both_attacked = true
 		if first_attack == 1:
 			GameManager.player2_pokemon.damage_dealt = calculate_damage(GameManager.player2_pokemon, GameManager.player1_pokemon, GameManager.player2_pokemon.current_move)
-
 		else:
 			GameManager.player1_pokemon.damage_dealt = calculate_damage(GameManager.player1_pokemon, GameManager.player2_pokemon, GameManager.player1_pokemon.current_move)
 
@@ -91,7 +90,10 @@ func calculate_damage(attacker, defender, move) -> int:
 
 	# Type effectiveness (placeholder)
 	var effectiveness = get_type_effectiveness(MoveDatabase.MOVES[move]["type"], defender.types)
-
+	
+	# Sets multiplier to pokemon object
+	attacker.damage_multiplier = effectiveness
+	
 	var modifier = random_multiplier * stab * crit * effectiveness
 
 	var damage = int(base_damage * modifier)

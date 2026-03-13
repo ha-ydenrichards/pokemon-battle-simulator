@@ -10,7 +10,7 @@ extends Node2D
 @onready var player_move_label = $PlayerMoveLabel
 @onready var timer = $Timer
 var current_player = 1
-
+var is_fainted: bool
 
 func _ready():
 	# Loads player 1's pokemon sprite texture and displays their moves first.
@@ -96,6 +96,65 @@ func switch_moves() -> void:
 func display_battle_info(pokemon_order) -> void:
 	player_move_label.text = pokemon_order[0].pokemon_name + " used " + pokemon_order[0].current_move + "!"
 	await get_tree().create_timer(2.0).timeout
+	pokemon_order[1].current_hp -= pokemon_order[0].damage_dealt
+	is_fainted = is_pokemon_fainted(pokemon_order[1])
+	print(is_fainted)
+	update_labels(pokemon_order[0])
+	await get_tree().create_timer(2.0).timeout
+	pokemon_order[0].current_hp -= pokemon_order[1].damage_dealt
+	player_move_label.text = pokemon_order[1].pokemon_name + " used " + pokemon_order[1].current_move + "!"
+	await get_tree().create_timer(2.0).timeout
+	is_fainted = is_pokemon_fainted(pokemon_order[0])
+	update_labels(pokemon_order[1])
+	await get_tree().create_timer(2.0).timeout
+	
+	# TO DO:
+	# Print effectiveness if super or not very effective - DONE
+	# Print pokemon fainted and remove sprite
+	# Display message saying which player won
+func update_labels(pokemon1):
+	if GameManager.player1_pokemon == pokemon1 and is_fainted == false:
+		player2_pokemon_health.text = GameManager.player2_pokemon.pokemon_name + ": " + str(GameManager.player2_pokemon.current_hp)
+		print('1')
+	elif GameManager.player1_pokemon == pokemon1 and is_fainted == true:
+		player2_pokemon_health.text = GameManager.player2_pokemon.pokemon_name+ ": " + "0"
+		print('2')
+	elif GameManager.player2_pokemon == pokemon1 and is_fainted == false:
+		print('3')
+		player1_pokemon_health.text = GameManager.player1_pokemon.pokemon_name+ ": " + str(GameManager.player1_pokemon.current_hp)
+	else:
+		print('4')
+		player1_pokemon_health.text = GameManager.player1_pokemon.pokemon_name+ ": " + "0"
+	is_fainted = false
+	await move_effectiveness(pokemon1)
+	"""
+	if GameManager.player1_pokemon == pokemon2 and is_fainted == false:
+		player2_pokemon_health.text = pokemon2.pokemon_name + ": " + str(GameManager.player2_pokemon.current_hp)
+	elif GameManager.player1_pokemon == pokemon2 and is_fainted == true:
+		player2_pokemon_health.text = pokemon1.pokemon_name+ ": " + "0"
+	elif GameManager.player2_pokemon == pokemon2 and is_fainted == false:
+		player1_pokemon_health.text = pokemon1.pokemon_name+ ": " + str(GameManager.player1_pokemon.current_hp)
+	else:
+		player1_pokemon_health.text = pokemon1.pokemon_name+ ": " + "0"
+	is_fainted = false
+	await move_effectiveness(pokemon2)
+	"""
+
+
+	
+func move_effectiveness(pokemon) -> void:
+	print(pokemon["current_move"])
+	if pokemon.damage_multiplier > 1:
+		player_move_label.text = "It's Super Effective!"
+		await get_tree().create_timer(2.0).timeout
+	elif pokemon.damage_multiplier < 1:
+		player_move_label.text = "It's not very effective..."
+		await get_tree().create_timer(2.0).timeout
+
+func is_pokemon_fainted(pokemon) -> bool:
+	if pokemon.current_hp >= 0:
+		return false
+	return true
 	
 	
 		
