@@ -7,10 +7,6 @@ var player_selection = null
 func _ready() -> void:
 	pokemon_select_button.text = "Player 1 Select"
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
-
 func _on_pick_ampharos_pressed() -> void:
 	player_selection = "Ampharos"
 
@@ -42,6 +38,11 @@ func _on_pick_kingdra_pressed() -> void:
 func _on_pick_tinkaton_pressed() -> void:
 	player_selection = "Tinkaton"
 
+func _on_pick_blastoise_pressed() -> void:
+	player_selection = "Blastoise"
 
-func _on_timer_timeout() -> void:
-	pass # Replace with function body.
+func _on_pick_charizard_pressed() -> void:
+	player_selection = "Charizard"
+
+func _on_pick_venusaur_pressed() -> void:
+	player_selection = "Venusaur"

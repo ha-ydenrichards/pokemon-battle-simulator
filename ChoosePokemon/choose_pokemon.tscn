@@ -24,6 +24,14 @@ layout_mode = 2
 layout_mode = 2
 text = "Ampharos"
 
+[node name="PickBlastoise" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Blastoise"
+
+[node name="PickCharizard" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Charizard"
+
 [node name="PickCrobat" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 text = "Crobat"
@@ -36,9 +44,9 @@ text = "Houndoom"
 layout_mode = 2
 text = "Kingdra"
 
-[node name="PickTinkaton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="PickVenusaur" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
-text = "Tinkaton"
+text = "Venusaur"
 
 [node name="SelectPokemon" type="Button" parent="."]
 offset_left = 444.0
@@ -46,12 +54,11 @@ offset_top = 225.0
 offset_right = 567.0
 offset_bottom = 267.0
 
-[node name="Timer" type="Timer" parent="."]
-
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/PickAmpharos" to="." method="_on_pick_ampharos_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/PickBlastoise" to="." method="_on_pick_blastoise_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/PickCharizard" to="." method="_on_pick_charizard_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/PickCrobat" to="." method="_on_pick_crobat_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/PickHoundoom" to="." method="_on_pick_houndoom_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/PickKingdra" to="." method="_on_pick_kingdra_pressed"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/PickTinkaton" to="." method="_on_pick_tinkaton_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/PickVenusaur" to="." method="_on_pick_venusaur_pressed"]
 [connection signal="pressed" from="SelectPokemon" to="." method="_on_select_pokemon_pressed"]
-[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

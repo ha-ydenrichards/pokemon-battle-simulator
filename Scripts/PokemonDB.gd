@@ -13,6 +13,32 @@ var POKEMON_DATA = {
 		"front_sprite": "res://Assets/PokemonSprites/ampharos_front.png",
 		"back_sprite": "res://Assets/PokemonSprites/ampharos_back.png"
 	},
+	"Blastoise": {
+		"name": "Blastoise",
+		"hp": 79,
+		"attack": 83,
+		"defense": 100,
+		"special attack": 85,
+		"special defense": 105,
+		"speed": 78,
+		"type": ["Water"],
+		"moves": ["Hydro Pump", "Liquidation", "Earthquake", "Double Edge"],
+		"front_sprite": "res://Assets/PokemonSprites/blastoise_front.png",
+		"back_sprite": "res://Assets/PokemonSprites/blastoise_back.png"
+	},
+	"Charizard": {
+		"name": "Charizard",
+		"hp": 78,
+		"attack": 84,
+		"defense": 78,
+		"special attack": 109,
+		"special defense": 85,
+		"speed": 100,
+		"type": ["Fire", "Flying"],
+		"moves": ["Dragon Claw", "Flamethrower", "Flare Blitz", "Shadow Claw"],
+		"front_sprite": "res://Assets/PokemonSprites/charizard_front.png",
+		"back_sprite": "res://Assets/PokemonSprites/charizard_back.png"
+	},
 	"Crobat": {
 		"name": "Crobat",
 		"hp": 85,
@@ -52,18 +78,18 @@ var POKEMON_DATA = {
 		"front_sprite": "res://Assets/PokemonSprites/kingdra_front.png" ,
 		"back_sprite": "res://Assets/PokemonSprites/kingdra_back.png"
 	},
-	"Tinkaton": {
-		"name": "Tinkaton",
-		"hp": 85,
-		"attack": 90,
-		"defense": 80,
-		"special attack": 70,
-		"special defense": 80,
-		"speed": 130,
-		"type": ["Poison", "Flying"],
-		"moves": ["Air Slash", "Sludge Bomb", "Dark Pulse", "Shadow Ball"],
-		"front_sprite": "res://Assets/PokemonSprites/crobat_front.png",
-		"back_sprite": "res://Assets/PokemonSprites/crobat_back.png"
+	"Venusaur": {
+		"name": "Venusaur",
+		"hp": 80,
+		"attack": 82,
+		"defense": 83,
+		"special attack": 100,
+		"special defense": 100,
+		"speed": 80,
+		"type": ["Grass", "Poison"],
+		"moves": ["Energy Ball", "Giga Drain", "Earth Power", "Sludge Bomb"],
+		"front_sprite": "res://Assets/PokemonSprites/venusaur_front.png",
+		"back_sprite": "res://Assets/PokemonSprites/venusaur_back.png"
 	}
 }
 
