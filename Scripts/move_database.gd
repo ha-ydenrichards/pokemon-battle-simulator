@@ -25,7 +25,7 @@ var MOVES = {
 		"accuracy": 100,
 		"category": "Physical"
 	},
-	"Double-Edge": {
+	"Double Edge": {
 		"type": "Normal",
 		"power": 120,
 		"accuracy": 100,

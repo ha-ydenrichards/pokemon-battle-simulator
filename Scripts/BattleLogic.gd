@@ -1,8 +1,13 @@
 extends Node
+
+@onready var player_move_label = $PlayerMoveLabel
+
 var first_attack: int
-var both_attacked = false
+var both_attacked = true
 var first_pokemon
 var second_pokemon
+
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -39,25 +44,25 @@ func speed_calc() -> Array:
 			first_pokemon = GameManager.player1_pokemon
 			second_pokemon = GameManager.player2_pokemon
 			player_two_attack()
+	print([first_pokemon, second_pokemon])
 	return [first_pokemon, second_pokemon]
 
 # Calculates the total damage of player one's attack and stores it in the damage_dealt variable
 func player_one_attack() -> void:
-	GameManager.player1_pokemon.damage_dealt = calculate_damage(GameManager.player1_pokemon, GameManager.player2_pokemon, GameManager.player1_pokemon.current_move)
+	GameManager.player1_pokemon.damage_dealt = await calculate_damage(GameManager.player1_pokemon, GameManager.player2_pokemon, GameManager.player1_pokemon.current_move)
 	second_attack()
 	
 # Calculates the total damage of player two's attack and stores it in the damage_dealt variable
 func player_two_attack() -> void:
-	GameManager.player2_pokemon.damage_dealt = calculate_damage(GameManager.player2_pokemon, GameManager.player1_pokemon, GameManager.player2_pokemon.current_move)
+	GameManager.player2_pokemon.damage_dealt = await calculate_damage(GameManager.player2_pokemon, GameManager.player1_pokemon, GameManager.player2_pokemon.current_move)
 	second_attack()
 
 func second_attack() -> void:
 	if both_attacked != true:
-		both_attacked = true
 		if first_attack == 1:
-			GameManager.player2_pokemon.damage_dealt = calculate_damage(GameManager.player2_pokemon, GameManager.player1_pokemon, GameManager.player2_pokemon.current_move)
+			GameManager.player2_pokemon.damage_dealt = await calculate_damage(GameManager.player2_pokemon, GameManager.player1_pokemon, GameManager.player2_pokemon.current_move)
 		else:
-			GameManager.player1_pokemon.damage_dealt = calculate_damage(GameManager.player1_pokemon, GameManager.player2_pokemon, GameManager.player1_pokemon.current_move)
+			GameManager.player1_pokemon.damage_dealt = await calculate_damage(GameManager.player1_pokemon, GameManager.player2_pokemon, GameManager.player1_pokemon.current_move)
 
 	
 func calculate_damage(attacker, defender, move) -> int:
@@ -65,6 +70,9 @@ func calculate_damage(attacker, defender, move) -> int:
 	var move_power = MoveDatabase.MOVES[move]["power"]
 	var attack_power = null
 	var defense_power = null
+	# Reverses the both_attacked boolean. If the second pokemon is attacking, this boolean swaps to true, 
+	# telling the program both pokemon have used their selected attacks.
+	both_attacked = !both_attacked
 	if MoveDatabase.MOVES[move]["category"] == "Physical":
 		attack_power = attacker.attack
 		defense_power = defender.defense
@@ -85,10 +93,14 @@ func calculate_damage(attacker, defender, move) -> int:
 
 	# Critical hit (simplified)
 	var crit = 1.0
-	if randi_range(1, 16) == 1:
+	if randi_range(1, 1) == 1:
 		crit = 1.5
+		GameManager.player_move_label.text = "A critical hit!"
+		await get_tree().create_timer(2.0).timeout
 
 	# Type effectiveness (placeholder)
+	print("Move: " + move)
+	print(defender.types)
 	var effectiveness = get_type_effectiveness(MoveDatabase.MOVES[move]["type"], defender.types)
 	
 	# Sets multiplier to pokemon object
@@ -100,9 +112,7 @@ func calculate_damage(attacker, defender, move) -> int:
 	
 	# If move accuracy is less than 100, calculate whether or not the move hits
 	if MoveDatabase.MOVES[move]["accuracy"] < 100:
-		print(MoveDatabase.MOVES[move]["accuracy"])
 		var random_num = randi_range(1,100)
-		print(random_num)
 		if random_num >= MoveDatabase.MOVES[move]["accuracy"]:
 			damage = 0
 	return damage
@@ -116,6 +126,6 @@ func get_type_effectiveness(move_type, defender_types):
 		# Check if the defender's type is listed as a weakness or resistance in the move type dictionary
 		if TypeChart.TYPE_CHART[move_type].has(type):
 			multiplier *= TypeChart.TYPE_CHART[move_type][type]
-			print(multiplier)
+			print(move_type + ": " + str(multiplier))
 
 	return multiplier

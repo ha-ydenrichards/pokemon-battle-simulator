@@ -92,9 +92,12 @@ func switch_moves() -> void:
 
 # This function updates labels and displays damage output and move selection.
 func display_battle_info(pokemon_order) -> void:
+	print(pokemon_order[0].current_move + " asdf")
+	print(pokemon_order[0].damage_multiplier)
+	print(pokemon_order[0].damage_dealt)
 	player_move_label.text = pokemon_order[0].pokemon_name + " used " + pokemon_order[0].current_move + "!"
 	await get_tree().create_timer(2.0).timeout
-	if pokemon_order[0].damage_dealt != 0:
+	if pokemon_order[0].damage_dealt != 0 and pokemon_order[0].damage_multiplier != 0:
 		pokemon_order[1].current_hp -= pokemon_order[0].damage_dealt
 		is_fainted = is_pokemon_fainted(pokemon_order[1])
 	elif pokemon_order[0].damage_multiplier != 0: 
@@ -105,7 +108,7 @@ func display_battle_info(pokemon_order) -> void:
 	pokemon_order[0].current_hp -= pokemon_order[1].damage_dealt
 	player_move_label.text = pokemon_order[1].pokemon_name + " used " + pokemon_order[1].current_move + "!"
 	await get_tree().create_timer(2.0).timeout
-	if pokemon_order[1].damage_dealt != 0:
+	if pokemon_order[1].damage_dealt != 0 and pokemon_order[1].damage_multiplier != 0:
 		await get_tree().create_timer(2.0).timeout
 		is_fainted = is_pokemon_fainted(pokemon_order[0])
 	elif pokemon_order[1].damage_multiplier != 0: 
@@ -145,6 +148,7 @@ func move_effectiveness(pokemon1, pokemon2) -> void:
 	elif pokemon1.damage_multiplier < 1:
 		player_move_label.text = "It's not very effective..."
 		await get_tree().create_timer(2.0).timeout
+	pokemon1.damage_multiplier = 1.0
 
 func is_pokemon_fainted(pokemon) -> bool:
 	if pokemon.current_hp >= 0:
