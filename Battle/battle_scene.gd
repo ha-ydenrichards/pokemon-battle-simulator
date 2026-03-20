@@ -15,6 +15,7 @@ var victory = 0
 
 func _ready():
 	# Loads player 1's pokemon sprite texture and displays their moves first.
+	GameManager.player_move_label = $PlayerMoveLabel
 	if GameManager.player1_pokemon:
 		player1_sprite.texture = load(GameManager.player1_pokemon.back_sprite)
 		first_move.text = GameManager.player1_pokemon.moves[0]
@@ -92,9 +93,6 @@ func switch_moves() -> void:
 
 # This function updates labels and displays damage output and move selection.
 func display_battle_info(pokemon_order) -> void:
-	print(pokemon_order[0].current_move + " asdf")
-	print(pokemon_order[0].damage_multiplier)
-	print(pokemon_order[0].damage_dealt)
 	player_move_label.text = pokemon_order[0].pokemon_name + " used " + pokemon_order[0].current_move + "!"
 	await get_tree().create_timer(2.0).timeout
 	if pokemon_order[0].damage_dealt != 0 and pokemon_order[0].damage_multiplier != 0:

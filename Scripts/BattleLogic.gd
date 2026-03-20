@@ -95,7 +95,8 @@ func calculate_damage(attacker, defender, move) -> int:
 	var crit = 1.0
 	if randi_range(1, 1) == 1:
 		crit = 1.5
-		GameManager.player_move_label.text = "A critical hit!"
+		print("CRITICAL HIT")
+		GameManager.player_move_label.text = "A critical hit! " + str(randi())
 		await get_tree().create_timer(2.0).timeout
 
 	# Type effectiveness (placeholder)
